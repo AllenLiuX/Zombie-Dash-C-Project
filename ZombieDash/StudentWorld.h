@@ -20,10 +20,10 @@ public:
     virtual void cleanUp();
     bool hasWall(int x, int y);
 private:
-    Penelope* penel;
-    std::vector<Wall*> wall;
+    std::vector<Actor*> m_actors;
+    Penelope* m_penel;
+    std::vector<Wall*> m_walls;
     
-//    Wall* wall;
 };
 
 #endif // STUDENTWORLD_H_

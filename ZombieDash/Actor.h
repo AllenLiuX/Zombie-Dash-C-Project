@@ -10,10 +10,13 @@ class StudentWorld;
 class Actor: public GraphObject{
 public:
     Actor(int imageID, double startX, double startY, int startDirection, int depth): GraphObject(imageID, startX, startY, startDirection, depth){
+        alive = true;
     }
-    virtual void doSomething() {return;}
+    bool isAlive() {return alive;}
+    virtual void doSomething()=0;
 private:
 //   StudentWorld* sWorld;
+    bool alive;
 
 };
 
@@ -22,7 +25,7 @@ public:
     Wall(StudentWorld* world, double startX, double startY): Actor(IID_WALL, startX, startY, right, 0){
         m_world = world;
     }
-    //    virtual void doSomething() {return;}
+    virtual void doSomething() {return;}
 private:
     StudentWorld* m_world;
 };
@@ -30,14 +33,14 @@ private:
 class Penelope: public Actor{
 public:
     Penelope(StudentWorld* world, double startX, double startY): Actor(IID_PLAYER, startX, startY, right, 0){
-        alive = true;
+//        alive = true;
         m_world = world;
     }
     virtual void doSomething();
-    bool isAlive() {return alive;}
+//    bool isAlive() {return alive;}
 private:
     StudentWorld* m_world;
-    bool alive;
+//    bool alive;
     
 };
 

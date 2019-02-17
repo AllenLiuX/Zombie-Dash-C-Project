@@ -20,7 +20,7 @@ void Penelope::doSomething(){
         }
         if(dir == KEY_PRESS_DOWN){
             setDirection(down);
-            if(!m_world->hasWall(getX()/SPRITE_WIDTH, (getY()-1)/SPRITE_HEIGHT))
+            if(!m_world->hasWall(getX()/SPRITE_WIDTH, (getY()-1)/SPRITE_HEIGHT))    //getY()-1 to make penel a little bit left!
                 moveTo(getX(), getY()-4);
         }
         if(dir == KEY_PRESS_LEFT){
