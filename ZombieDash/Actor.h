@@ -19,11 +19,12 @@ private:
 
 class Wall: public Actor{
 public:
-    Wall(double startX, double startY): Actor(IID_WALL, startX, startY, right, 0){
-        
+    Wall(StudentWorld* world, double startX, double startY): Actor(IID_WALL, startX, startY, right, 0){
+        m_world = world;
     }
     //    virtual void doSomething() {return;}
-    
+private:
+    StudentWorld* m_world;
 };
 
 class Penelope: public Actor{

@@ -6,7 +6,9 @@
 #include <string>
 
 // Students:  Add code to this file, StudentWorld.cpp, Actor.h, and Actor.cpp
+class Actor;
 class Penelope;
+class Wall;
 
 class StudentWorld : public GameWorld
 {
@@ -19,6 +21,7 @@ public:
 
 private:
     Penelope* penel;
+    std::vector<Wall*> wall;
     
 //    Wall* wall;
 };

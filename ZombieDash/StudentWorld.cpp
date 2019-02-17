@@ -1,10 +1,9 @@
 #include "StudentWorld.h"
 #include "GameConstants.h"
-#include "Actor.h"
+#include "Level.h"
 #include <string>
 using namespace std;
 
-class Penelope;
 
 GameWorld* createStudentWorld(string assetPath)
 {
@@ -21,7 +20,20 @@ StudentWorld::StudentWorld(string assetPath)
 
 int StudentWorld::init()
 {
-    penel = new Penelope(this, 200.0, 100.0);
+    Level lev(assetPath());
+    string levelFile = "level01.txt";
+    Level::LoadResult result = lev.loadLevel(levelFile);
+    for (int i=0; i<16; i++){
+        for(int j=0; j<16; j++){
+            Level::MazeEntry ge = lev.getContentsOf(i, j);
+            if(ge == Level::player)
+                penel = new Penelope(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT);
+            if(ge == Level::wall)
+                wall.push_back(new Wall(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+        }
+    }
+//    penel = new Penelope(this, 200.0, 100.0);
+//    wall = new Wall(this, 10.0, 10.0);
 
     return GWSTATUS_CONTINUE_GAME;
 }
