@@ -14,16 +14,24 @@ void Penelope::doSomething(){
     
     if(m_world->getKey(dir)){
         if(dir == KEY_PRESS_UP){
-            this->moveTo(getX(), getY()+1);
+            setDirection(up);
+            if(!m_world->hasWall(getX()/SPRITE_WIDTH, getY()/SPRITE_HEIGHT + 1))
+                moveTo(getX(), getY()+4);
         }
         if(dir == KEY_PRESS_DOWN){
-            this->moveTo(getX(), getY()-1);
+            setDirection(down);
+            if(!m_world->hasWall(getX()/SPRITE_WIDTH, (getY()-1)/SPRITE_HEIGHT))
+                moveTo(getX(), getY()-4);
         }
         if(dir == KEY_PRESS_LEFT){
-            this->moveTo(getX()-1, getY());
+            setDirection(left);
+            if(!m_world->hasWall((getX()-1)/SPRITE_WIDTH, getY()/SPRITE_HEIGHT))
+                moveTo(getX()-4, getY());
         }
         if(dir == KEY_PRESS_RIGHT){
-            this->moveTo(getX()+1, getY());
+            setDirection(right);
+            if(!m_world->hasWall(getX()/SPRITE_WIDTH+1, getY()/SPRITE_HEIGHT))
+                moveTo(getX()+4, getY());
         }
     }
 }

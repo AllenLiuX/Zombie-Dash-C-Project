@@ -14,11 +14,11 @@ class StudentWorld : public GameWorld
 {
 public:
     StudentWorld(std::string assetPath);
-    //    ~StudentWorld();
+    ~StudentWorld(){this->cleanUp(); }
     virtual int init();
     virtual int move();
     virtual void cleanUp();
-
+    bool hasWall(int x, int y);
 private:
     Penelope* penel;
     std::vector<Wall*> wall;

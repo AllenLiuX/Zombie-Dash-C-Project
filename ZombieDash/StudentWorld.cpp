@@ -18,6 +18,13 @@ StudentWorld::StudentWorld(string assetPath)
     
 }
 
+bool StudentWorld::hasWall(int x, int y){
+    for(int i=0; i< wall.size(); i++)
+        if(wall[i]->getX()/SPRITE_WIDTH == x && wall[i]->getY()/SPRITE_HEIGHT == y)
+            return true;
+    return false;
+}
+
 int StudentWorld::init()
 {
     Level lev(assetPath());
@@ -54,4 +61,8 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
+    delete penel;
+    for (int i=0; i<wall.size(); i++)
+        delete wall[i];
+    
 }
