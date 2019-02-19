@@ -9,20 +9,55 @@ class StudentWorld;
 
 class Actor: public GraphObject{
 public:
-    Actor(int imageID, double startX, double startY, int startDirection, int depth): GraphObject(imageID, startX, startY, startDirection, depth){
+    Actor(int imageID, double startX, double startY, int depth): GraphObject(imageID, startX, startY, right, depth){
         alive = true;
     }
     bool isAlive() {return alive;}
     virtual void doSomething()=0;
 private:
-//   StudentWorld* sWorld;
     bool alive;
 
 };
-
-class Wall: public Actor{
+//===================Super Class ====================
+class Block: public Actor{
 public:
-    Wall(StudentWorld* world, double startX, double startY): Actor(IID_WALL, startX, startY, right, 0){
+    Block(int imageID, double startX, double startY, int depth): Actor(imageID, startX, startY, depth){
+        
+    }
+};
+
+
+class Zombie: public Actor{
+public:
+    Zombie(int imageID, double startX, double startY): Actor(imageID, startX, startY, 0){
+    
+    }
+};
+
+class Goodie: public Actor{
+public:
+    Goodie(int imageID, double startX, double startY): Actor(imageID, startX, startY, 1){
+        
+    }
+};
+
+
+
+//======================Base Class #2==============
+class Person: public Block{
+public:
+    Person(int imageID, double startX, double startY): Block(imageID, startX, startY, 0){
+        infected = false;
+    }
+    bool isInfected() {return infected;}
+    
+private:
+    bool infected;
+};
+
+class Wall: public Block{
+public:
+    Wall(StudentWorld* world, double startX, double startY): Block(IID_WALL, startX, startY, 0){
         m_world = world;
     }
     virtual void doSomething() {return;}
@@ -30,18 +65,56 @@ private:
     StudentWorld* m_world;
 };
 
-class Penelope: public Actor{
+class Exit: public Block{
 public:
-    Penelope(StudentWorld* world, double startX, double startY): Actor(IID_PLAYER, startX, startY, right, 0){
-//        alive = true;
+    Exit(StudentWorld* world, double startX, double startY): Block(IID_EXIT, startX, startY, 1){
+        m_world = world;
+    }
+    virtual void doSomething() {return;}
+private:
+    StudentWorld* m_world;
+};
+
+
+class DumbZombie: public Zombie{
+public:
+    DumbZombie(int imageID, double startX, double startY): Zombie(imageID, startX, startY){
+        
+    }
+    virtual void doSomething();
+    
+};
+
+class SmartZombie: public Zombie{
+public:
+    SmartZombie(int imageID, double startX, double startY): Zombie(imageID, startX, startY){
+        
+    }
+    virtual void doSomething();
+};
+//================Class #3=====================
+
+class Penelope: public Person{
+public:
+    Penelope(StudentWorld* world, double startX, double startY): Person(IID_PLAYER, startX, startY){
         m_world = world;
     }
     virtual void doSomething();
-//    bool isAlive() {return alive;}
 private:
     StudentWorld* m_world;
-//    bool alive;
     
 };
+
+class Citizen: public Person{
+public:
+    Citizen(StudentWorld* world, double startX, double startY): Person(IID_CITIZEN, startX, startY){
+        m_world = world;
+    }
+private:
+    StudentWorld* m_world;
+};
+//==================
+
+
 
 #endif // ACTOR_H_

@@ -18,9 +18,9 @@ StudentWorld::StudentWorld(string assetPath)
     
 }
 
-bool StudentWorld::hasWall(int x, int y){
-    for(int i=0; i< m_walls.size(); i++)
-        if(m_walls[i]->getX()/SPRITE_WIDTH == x && m_walls[i]->getY()/SPRITE_HEIGHT == y)
+bool StudentWorld::hasBlock(int x, int y){
+    for(int i=0; i< m_blocks.size(); i++)
+        if(m_blocks[i]->getX()/SPRITE_WIDTH == x && m_blocks[i]->getY()/SPRITE_HEIGHT == y)
             return true;
     return false;
 }
@@ -36,10 +36,18 @@ int StudentWorld::init()
             if(ge == Level::player){
                 m_penel = new Penelope(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT);
                 m_actors.push_back(m_penel);
+                m_people.push_back(m_penel);
+                m_blocks.push_back(m_penel);
             }
             if(ge == Level::wall){
                 m_walls.push_back(new Wall(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+                m_blocks.push_back(m_walls.back());
                 m_actors.push_back(m_walls.back());
+            }
+            if(ge == Level::exit){
+                m_exit = new Exit(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT);
+                m_blocks.push_back(m_exit);
+                m_actors.push_back(m_exit);
             }
         }
     }
@@ -66,8 +74,7 @@ int StudentWorld::move()
 
 void StudentWorld::cleanUp()
 {
-    delete m_penel;
-    for (int i=0; i<m_walls.size(); i++)
-        delete m_walls[i];
+    for (int i=0; i<m_actors.size(); i++)
+        delete m_actors[i];
     
 }
