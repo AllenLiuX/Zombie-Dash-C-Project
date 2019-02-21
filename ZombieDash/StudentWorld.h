@@ -43,6 +43,9 @@ public:
     void changeMines(int i) {n_mines += i;}
     void changeInfected(int i) {n_Infected += i;}
     void popActor(double x, double y);
+//    template <typename Mvector>
+//    void pop(Mvector a, double x, double y);
+    void pop(vector<Actor*> vec, double x, double y);
 private:
     int n_Vacc;
     int n_Flames;

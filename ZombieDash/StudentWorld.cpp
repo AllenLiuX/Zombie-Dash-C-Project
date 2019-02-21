@@ -178,12 +178,26 @@ bool StudentWorld::goodieOverlap(double x, double y){
 //    else return false;
 //}
 
-void StudentWorld::popActor(double x, double y){
-    for(int i=0; i<m_actors.size(); i++){
-        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y){
-            for(int j=i; j<m_actors.size(); j++)
-                m_actors[j] = m_actors[j+1];
-            m_actors.pop_back();
+//template <typename Mvector>
+void StudentWorld::pop(vector<Actor*> vec, double x, double y){
+    for(int i=0; i<vec.size(); i++){
+        if(vec[i]->getX() == x && vec[i]->getY() == y){
+            for(int j=i; j<vec.size(); j++)
+                vec[j] = vec[j+1];
+            vec.pop_back();
         }
     }
 }
+
+void StudentWorld::popActor(double x, double y){
+    pop(m_actors, x, y);
+//    for(int i=0; i<m_actors.size(); i++){
+//        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y){
+//            for(int j=i; j<m_actors.size(); j++)
+//                m_actors[j] = m_actors[j+1];
+//            m_actors.pop_back();
+//        }
+//    }
+}
+
+
