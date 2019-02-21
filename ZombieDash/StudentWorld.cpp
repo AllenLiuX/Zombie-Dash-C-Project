@@ -48,6 +48,15 @@ bool StudentWorld::exitOverlap(double x, double y){
     return false;
 }
 
+bool StudentWorld::goodieOverlap(double x, double y){
+        double dx = m_penel->getX()-x;
+        double dy = m_penel->getY()-y;
+        if(dx*dx + dy*dy <= 100){
+            return true;
+        }
+    return false;
+}
+
 //bool overlap(double x1, double y1, double x2, double y2){
 //    double dx = x1-x2;
 //    double dy = y1-y2;
@@ -90,6 +99,22 @@ int StudentWorld::init()
                 m_exit = new Exit(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT);
 //                m_blocks.push_back(m_exit);
                 m_actors.push_back(m_exit);
+            }
+            if(ge == Level::pit){
+                m_pits.push_back(new Pit(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+                m_actors.push_back(m_pits.back());
+            }
+            if(ge == Level::vaccine_goodie){
+                m_vaccines.push_back(new VaccineGoodie(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+                m_actors.push_back(m_vaccines.back());
+            }
+            if(ge == Level::gas_can_goodie){
+                m_gascans.push_back(new GascanGoodie(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+                m_actors.push_back(m_gascans.back());
+            }
+            if(ge == Level::landmine_goodie){
+                m_landminegoodies.push_back(new LandmineGoodie(this, i*SPRITE_WIDTH, j*SPRITE_HEIGHT));
+                m_actors.push_back(m_landminegoodies.back());
             }
         }
     }

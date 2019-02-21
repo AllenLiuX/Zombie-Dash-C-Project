@@ -12,58 +12,38 @@ void Penelope::doSomething(){
     if(!isAlive())
         return;
     int dir = 0;
-//    int X = getX();
-//    int Y = getY();
     
     if(m_world->getKey(dir)){
         
         if(dir == KEY_PRESS_UP){
             setDirection(up);
-            if(!m_world->hasBlock(getX(), getY() + 4))
+            if(!m_world->hasBlock(getX(), getY() + 1))
                 moveTo(getX(), getY()+4);
         }
         if(dir == KEY_PRESS_DOWN){
             setDirection(down);
-            if(!m_world->hasBlock(getX(), getY()-4))    //getY()-1 to make penel a little bit left!
+            if(!m_world->hasBlock(getX(), getY()-1))    //getY()-1 to make penel a little bit left!
                 moveTo(getX(), getY()-4);
         }
         if(dir == KEY_PRESS_LEFT){
             setDirection(left);
-            if(!m_world->hasBlock(getX()-4, getY()))
+            if(!m_world->hasBlock(getX()-1, getY()))
                 moveTo(getX()-4, getY());
         }
         if(dir == KEY_PRESS_RIGHT){
             setDirection(right);
-            if(!m_world->hasBlock(getX()+4, getY()))
+            if(!m_world->hasBlock(getX()+1, getY()))
                 moveTo(getX()+4, getY());
         }
         
-        
-//        if(dir == KEY_PRESS_UP){
-//            setDirection(up);
-//            if(!m_world->hasBlock(getX()/SPRITE_WIDTH, getY()/SPRITE_HEIGHT + 1))
-//                moveTo(getX(), getY()+4);
-//        }
-//        if(dir == KEY_PRESS_DOWN){
-//            setDirection(down);
-//            if(!m_world->hasBlock(getX()/SPRITE_WIDTH, (getY()-1)/SPRITE_HEIGHT))    //getY()-1 to make penel a little bit left!
-//                moveTo(getX(), getY()-4);
-//        }
-//        if(dir == KEY_PRESS_LEFT){
-//            setDirection(left);
-//            if(!m_world->hasBlock((getX()-1)/SPRITE_WIDTH, getY()/SPRITE_HEIGHT))
-//                moveTo(getX()-4, getY());
-//        }
-//        if(dir == KEY_PRESS_RIGHT){
-//            setDirection(right);
-//            if(!m_world->hasBlock(getX()/SPRITE_WIDTH+1, getY()/SPRITE_HEIGHT))
-//                moveTo(getX()+4, getY());
-//        }
     }
 }
 
 void Exit::doSomething(){
-    
     m_world->exitOverlap(getX(), getY());
-
 }
+
+void Goodie::doSomething(){
+    
+}
+

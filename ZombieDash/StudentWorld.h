@@ -18,6 +18,10 @@ class Exit;
 class Citizen;
 class SmartZombie;
 class DumbZombie;
+class Pit;
+class VaccineGoodie;
+class GascanGoodie;
+class LandmineGoodie;
 
 
 class StudentWorld : public GameWorld
@@ -31,20 +35,30 @@ public:
     bool hasBlock(double x, double y);
 //    void deleteActorAt(int i){delete m_actors[i];}
     bool exitOverlap(double x, double y);
+    bool goodieOverlap(double x, double y);
     void clean(Actor*);
 private:
     vector<Actor*> m_actors;
-    vector<Block*> m_blocks;
-    vector<Person*> m_people;
-    vector<Goodie*> m_goodies;
-    vector<Zombie*> m_zombies;
-    Penelope* m_penel;
+    
+    vector<Block*> m_blocks;    //wall, exit, people
     vector<Wall*> m_walls;
     Exit* m_exit;
+    vector<Person*> m_people;   //citizen, penel
     vector<Citizen*> m_citizens;
+    Penelope* m_penel;
+    
+    vector<Goodie*> m_goodies;  //vaccine, gascan, landminegoodie
+    vector<VaccineGoodie*> m_vaccines;
+    vector<GascanGoodie*> m_gascans;
+    vector<LandmineGoodie*> m_landminegoodies;
+    
+    vector<Zombie*> m_zombies;  //dumb, smart
     vector<DumbZombie*> m_dumbZombies;
     vector<SmartZombie*> m_smartZombies;
     
+    vector<Pit*> m_pits;
+    
+
     
 };
 

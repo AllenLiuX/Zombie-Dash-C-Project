@@ -37,11 +37,34 @@ public:
 
 class Goodie: public Actor{
 public:
-    Goodie(int imageID, double startX, double startY): Actor(imageID, startX, startY, 1){
-        
+    Goodie(StudentWorld* world, int imageID, double startX, double startY): Actor(imageID, startX, startY, 1){
+        m_world = world;
     }
+    bool overlapPenel();
+    virtual void doSomething();
+private:
+    StudentWorld* m_world;
 };
 
+class Exit: public Actor{
+public:
+    Exit(StudentWorld* world, double startX, double startY): Actor(IID_EXIT, startX, startY, 1){
+        m_world = world;
+    }
+    virtual void doSomething();
+private:
+    StudentWorld* m_world;
+};
+
+class Pit: public Actor{
+public:
+    Pit(StudentWorld* world, double startX, double startY): Actor(IID_PIT, startX, startY, 0){
+        m_world = world;
+    }
+    virtual void doSomething(){return;}
+private:
+    StudentWorld* m_world;
+};
 
 
 //======================Base Class #2==============
@@ -70,16 +93,32 @@ private:
     StudentWorld* m_world;
 };
 
-class Exit: public Actor{
+//====================Goodies =========================
+class VaccineGoodie: public Goodie{
 public:
-    Exit(StudentWorld* world, double startX, double startY): Actor(IID_EXIT, startX, startY, 1){
-        m_world = world;
+    VaccineGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_VACCINE_GOODIE, startX, startY){
     }
-    virtual void doSomething();
+    virtual void doSomething(){return;}
 private:
-    StudentWorld* m_world;
 };
 
+class GascanGoodie: public Goodie{
+public:
+    GascanGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_GAS_CAN_GOODIE, startX, startY){
+    }
+    virtual void doSomething(){return;}
+private:
+};
+
+class LandmineGoodie: public Goodie{
+public:
+    LandmineGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_LANDMINE_GOODIE, startX, startY){
+    }
+    virtual void doSomething(){return;}
+private:
+};
+
+//------------Zombies ---------------------
 
 class DumbZombie: public Zombie{
 public:
@@ -100,7 +139,7 @@ public:
 private:
     StudentWorld* m_world;
 };
-//================Class #3=====================
+//================People =====================
 
 class Penelope: public Person{
 public:
