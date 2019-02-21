@@ -37,7 +37,18 @@ public:
     bool exitOverlap(double x, double y);
     bool goodieOverlap(double x, double y);
     void clean(Actor*);
+    
+    void changeVacc(int i){n_Vacc += i;}
+    void changeFlames(int i) {n_Flames += i;}
+    void changeMines(int i) {n_mines += i;}
+    void changeInfected(int i) {n_Infected += i;}
+    void popActor(double x, double y);
 private:
+    int n_Vacc;
+    int n_Flames;
+    int n_mines;
+    int n_Infected;
+    
     vector<Actor*> m_actors;
     
     vector<Block*> m_blocks;    //wall, exit, people

@@ -35,16 +35,7 @@ public:
     }
 };
 
-class Goodie: public Actor{
-public:
-    Goodie(StudentWorld* world, int imageID, double startX, double startY): Actor(imageID, startX, startY, 1){
-        m_world = world;
-    }
-    bool overlapPenel();
-    virtual void doSomething();
-private:
-    StudentWorld* m_world;
-};
+
 
 class Exit: public Actor{
 public:
@@ -94,11 +85,25 @@ private:
 };
 
 //====================Goodies =========================
+class Goodie: public Actor{
+public:
+    Goodie(StudentWorld* world, int imageID, double startX, double startY): Actor(imageID, startX, startY, 1){
+        m_world = world;
+    }
+    bool overlapPenel();
+    virtual void doSomething();
+    virtual void bePickedUp()=0;
+    StudentWorld* world() {return m_world;}
+private:
+    StudentWorld* m_world;
+};
+
 class VaccineGoodie: public Goodie{
 public:
     VaccineGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_VACCINE_GOODIE, startX, startY){
     }
-    virtual void doSomething(){return;}
+//    virtual void doSomething(){return;}
+    virtual void bePickedUp();
 private:
 };
 
@@ -107,6 +112,7 @@ public:
     GascanGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_GAS_CAN_GOODIE, startX, startY){
     }
     virtual void doSomething(){return;}
+    virtual void bePickedUp(){return;}
 private:
 };
 
@@ -115,6 +121,7 @@ public:
     LandmineGoodie(StudentWorld* world, double startX, double startY): Goodie(world, IID_LANDMINE_GOODIE, startX, startY){
     }
     virtual void doSomething(){return;}
+    virtual void bePickedUp(){return;}
 private:
 };
 

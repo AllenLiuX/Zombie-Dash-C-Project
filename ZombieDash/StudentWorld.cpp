@@ -3,6 +3,8 @@
 #include "Level.h"
 #include <string>
 #include <cmath>
+#include <sstream>
+#include <iomanip>
 using namespace std;
 
 
@@ -14,56 +16,13 @@ GameWorld* createStudentWorld(string assetPath)
 // Students:  Add code to this file, StudentWorld.h, Actor.h and Actor.cpp
 
 StudentWorld::StudentWorld(string assetPath)
-: GameWorld(assetPath)
+: GameWorld(assetPath), n_Vacc(0), n_Flames(0), n_mines(0), n_Infected(0)
 {
     
     
 }
 
-bool StudentWorld::hasBlock(double x, double y){
-    for(int i=0; i< m_blocks.size(); i++){
-        double dx = abs(m_blocks[i]->getX() - x);
-        double dy = abs(m_blocks[i]->getY() - y);
-        if(dx <= SPRITE_WIDTH-1 && dy <= SPRITE_HEIGHT-1)
-            return true;
-    }
-    return false;
-    
-//    for(int i=0; i< m_blocks.size(); i++)
-//        if(m_blocks[i]->getX()/SPRITE_WIDTH == x && m_blocks[i]->getY()/SPRITE_HEIGHT == y)
-//            return true;
-//    return false;
-}
 
-bool StudentWorld::exitOverlap(double x, double y){
-    for(int i=0; i<m_people.size(); i++){
-        double dx = m_people[i]->getX()-x;
-        double dy = m_people[i]->getY()-y;
-        if(dx*dx + dy*dy <= 100){
-            m_people[i]->setExit();
-//            delete m_people[i];
-            return true;
-        }
-    }
-    return false;
-}
-
-bool StudentWorld::goodieOverlap(double x, double y){
-        double dx = m_penel->getX()-x;
-        double dy = m_penel->getY()-y;
-        if(dx*dx + dy*dy <= 100){
-            return true;
-        }
-    return false;
-}
-
-//bool overlap(double x1, double y1, double x2, double y2){
-//    double dx = x1-x2;
-//    double dy = y1-y2;
-//    if(dx*dx + dy*dy <= 100)
-//        return true;
-//    else return false;
-//}
 
 int StudentWorld::init()
 {
@@ -127,6 +86,11 @@ int StudentWorld::move()
     // This code is here merely to allow the game to build, run, and terminate after you hit enter.
     // Notice that the return value GWSTATUS_PLAYER_DIED will cause our framework to end the current level.
     
+    ostringstream oss;
+    oss<<"Score:  "<<getScore()<<"  Level:  "<<getLevel()<<"  Lives:  "<<getLives()<<"  Vaccines:  "<<n_Vacc<<"  Flames:  "<<n_Flames<<"  Mines:  "<<n_mines<<"  Infected:  "<<n_Infected;
+    string s = oss.str();
+    
+    setGameStatText(s);
     for(int i=0; i<m_actors.size(); i++){
         if(m_actors[i]->isAlive()){
             m_actors[i]->doSomething();
@@ -165,4 +129,61 @@ void StudentWorld::cleanUp()
         m_blocks.pop_back();
     
     
+}
+
+
+
+bool StudentWorld::hasBlock(double x, double y){
+    for(int i=0; i< m_blocks.size(); i++){
+        double dx = abs(m_blocks[i]->getX() - x);
+        double dy = abs(m_blocks[i]->getY() - y);
+        if(dx <= SPRITE_WIDTH-1 && dy <= SPRITE_HEIGHT-1)
+            return true;
+    }
+    return false;
+    
+    //    for(int i=0; i< m_blocks.size(); i++)
+    //        if(m_blocks[i]->getX()/SPRITE_WIDTH == x && m_blocks[i]->getY()/SPRITE_HEIGHT == y)
+    //            return true;
+    //    return false;
+}
+
+bool StudentWorld::exitOverlap(double x, double y){
+    for(int i=0; i<m_people.size(); i++){
+        double dx = m_people[i]->getX()-x;
+        double dy = m_people[i]->getY()-y;
+        if(dx*dx + dy*dy <= 100){
+            m_people[i]->setExit();
+            //            delete m_people[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+bool StudentWorld::goodieOverlap(double x, double y){
+    double dx = m_penel->getX()-x;
+    double dy = m_penel->getY()-y;
+    if(dx*dx + dy*dy <= 100){
+        return true;
+    }
+    return false;
+}
+
+//bool overlap(double x1, double y1, double x2, double y2){
+//    double dx = x1-x2;
+//    double dy = y1-y2;
+//    if(dx*dx + dy*dy <= 100)
+//        return true;
+//    else return false;
+//}
+
+void StudentWorld::popActor(double x, double y){
+    for(int i=0; i<m_actors.size(); i++){
+        if(m_actors[i]->getX() == x && m_actors[i]->getY() == y){
+            for(int j=i; j<m_actors.size(); j++)
+                m_actors[j] = m_actors[j+1];
+            m_actors.pop_back();
+        }
+    }
 }

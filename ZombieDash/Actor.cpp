@@ -35,7 +35,6 @@ void Penelope::doSomething(){
             if(!m_world->hasBlock(getX()+1, getY()))
                 moveTo(getX()+4, getY());
         }
-        
     }
 }
 
@@ -43,7 +42,17 @@ void Exit::doSomething(){
     m_world->exitOverlap(getX(), getY());
 }
 
-void Goodie::doSomething(){
+void VaccineGoodie::bePickedUp(){
+    world()->increaseScore(50);
+    world()->changeVacc(1);
+    setDead();
+    world()->popActor(getX(), getY());  //Possible functions to generalize
+    delete this;
     
+}
+
+void Goodie::doSomething(){
+    if(m_world->goodieOverlap(getX(), getY()))
+        bePickedUp();
 }
 
