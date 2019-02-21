@@ -28,7 +28,10 @@ public:
     virtual int init();
     virtual int move();
     virtual void cleanUp();
-    bool hasBlock(int x, int y);
+    bool hasBlock(double x, double y);
+//    void deleteActorAt(int i){delete m_actors[i];}
+    bool exitOverlap(double x, double y);
+    void clean(Actor*);
 private:
     vector<Actor*> m_actors;
     vector<Block*> m_blocks;

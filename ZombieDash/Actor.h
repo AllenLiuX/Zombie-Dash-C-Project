@@ -12,6 +12,7 @@ public:
     Actor(int imageID, double startX, double startY, int depth): GraphObject(imageID, startX, startY, right, depth){
         alive = true;
     }
+    void setDead() {alive = false;}
     bool isAlive() {return alive;}
     virtual void doSomething()=0;
 private:
@@ -48,11 +49,15 @@ class Person: public Block{
 public:
     Person(int imageID, double startX, double startY): Block(imageID, startX, startY, 0){
         infected = false;
+        exit = false;
     }
     bool isInfected() {return infected;}
+    bool isExit() {return exit;}
+    void setExit() {exit = true;}
     
 private:
     bool infected;
+    bool exit;
 };
 
 class Wall: public Block{
@@ -65,12 +70,12 @@ private:
     StudentWorld* m_world;
 };
 
-class Exit: public Block{
+class Exit: public Actor{
 public:
-    Exit(StudentWorld* world, double startX, double startY): Block(IID_EXIT, startX, startY, 1){
+    Exit(StudentWorld* world, double startX, double startY): Actor(IID_EXIT, startX, startY, 1){
         m_world = world;
     }
-    virtual void doSomething() {return;}
+    virtual void doSomething();
 private:
     StudentWorld* m_world;
 };
@@ -78,19 +83,22 @@ private:
 
 class DumbZombie: public Zombie{
 public:
-    DumbZombie(int imageID, double startX, double startY): Zombie(imageID, startX, startY){
-        
+    DumbZombie(StudentWorld* world, double startX, double startY): Zombie(IID_ZOMBIE, startX, startY){
+        m_world = world;
     }
     virtual void doSomething();
-    
+private:
+    StudentWorld* m_world;
 };
 
 class SmartZombie: public Zombie{
 public:
-    SmartZombie(int imageID, double startX, double startY): Zombie(imageID, startX, startY){
-        
+    SmartZombie(StudentWorld* world, double startX, double startY): Zombie(IID_ZOMBIE, startX, startY){
+        m_world = world;
     }
     virtual void doSomething();
+private:
+    StudentWorld* m_world;
 };
 //================Class #3=====================
 
